@@ -75,7 +75,7 @@ class ColabCode:
     def _run_lab(self):
         token = str(uuid.uuid1())
         print(f"Jupyter lab token: {token}")
-        base_cmd = "jupyter-lab --ip='localhost' --allow-root --ServerApp.allow_remote_access=True --no-browser"
+        base_cmd = "jupyter-lab --ip='localhost' --allow-root --ServerApp.allow_remote_access=True --no-browser --notebook-dir='/kaggle/working'"
         os.system(f"fuser -n tcp -k {self.port}")
         if self._mount and colab_env:
             drive.mount("/content/drive")
