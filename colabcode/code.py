@@ -15,7 +15,7 @@ except ImportError:
     colab_env = False
 
 
-EXTENSIONS = ["ms-python.python", "ms-toolsai.jupyter"]
+EXTENSIONS = ["ms-python.python", "ms-toolsai.jupyter", "ms-vscode-remote.remote-ssh"]
 CODESERVER_VERSION = "3.7.4"
 
 
