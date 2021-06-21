@@ -77,10 +77,12 @@ class ColabCode:
         os.system(f"fuser -n tcp -k {self.port}")
         if self._mount and colab_env:
             drive.mount("/content/drive")
-        if self.password:
-            lab_cmd = f" --ServerApp.token='' --ServerApp.password='{self.password}' --port {self.port}"
-        else:
-            lab_cmd = f" --ServerApp.token='' --ServerApp.password='' --port {self.port}"
+            
+        lab_cmd = f" --ServerApp.token='' --port {self.port}"
+#         if self.password:
+#             lab_cmd = f" --ServerApp.token='' --ServerApp.password='{self.password}' --port {self.port}"
+#         else:
+#             lab_cmd = f" --ServerApp.token='' --ServerApp.password='' --port {self.port}"
         lab_cmd = base_cmd + lab_cmd
         with subprocess.Popen(
             [lab_cmd],
