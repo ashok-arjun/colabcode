@@ -73,16 +73,16 @@ class ColabCode:
             print(f"Public URL: {url}")
 
     def _run_lab(self):
+        token = str(uuid.uuid1())
+        print(f"Jupyter lab token: {token}")
         base_cmd = "jupyter-lab --ip='localhost' --allow-root --ServerApp.allow_remote_access=True --ContentsManager.allow_hidden=True --no-browser --notebook-dir='/kaggle/working'"
         os.system(f"fuser -n tcp -k {self.port}")
         if self._mount and colab_env:
             drive.mount("/content/drive")
-            
-        lab_cmd = f" --ServerApp.token='' --port {self.port}"
-#         if self.password:
-#             lab_cmd = f" --ServerApp.token='' --ServerApp.password='{self.password}' --port {self.port}"
-#         else:
-#             lab_cmd = f" --ServerApp.token='' --ServerApp.password='' --port {self.port}"
+        if self.password:
+            lab_cmd = f" --ServerApp.token='{token}' --ServerApp.password='{self.password}' --port {self.port}"
+        else:
+            lab_cmd = f" --ServerApp.token='{token}' --ServerApp.password='' --port {self.port}"
         lab_cmd = base_cmd + lab_cmd
         with subprocess.Popen(
             [lab_cmd],
@@ -116,3 +116,4 @@ class ColabCode:
         self._start_server()
         nest_asyncio.apply()
         uvicorn.run(app, host="127.0.0.1", port=self.port, workers=workers)
+        
